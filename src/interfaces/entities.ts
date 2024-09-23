@@ -5,7 +5,11 @@ export interface IRepository {
   html_url: string;
   description: string;
   stargazers_count: number;
+  forks: number;
   homepage: string;
+  owner: {
+      avatar_url: string;
+  }
 }
 
 /*

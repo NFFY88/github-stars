@@ -13,21 +13,20 @@ export const fetchRepositories = createAsyncThunk<
   IRepositoriesFilterParams,
   { state: RootState; rejectValue: string }
 >(
-  // (IBaseRequestParams & { withReset?: boolean }) | undefined
   `${NameSpace.Repositories}/fetchRepositories`,
-  async (params, { rejectWithValue, getState, dispatch }) => {
+  async (params, { rejectWithValue, dispatch }) => {
     try {
       dispatch(repositoriesActions.changeFilterParams(params));
 
       const response = await api.repositories.getRepositories(params);
-      console.log("response", response);
       if (response.status === 200) {
+        dispatch(repositoriesActions.setTotalCount(response.data.total_count));
         return response.data;
       } else {
-      return rejectWithValue("Failed to fetch contracts");
+        return rejectWithValue("Failed to fetch repositories");
       }
     } catch (error) {
-      return rejectWithValue("Failed to fetch contracts");
+      return rejectWithValue("Failed to fetch repositories");
     }
   }
 );

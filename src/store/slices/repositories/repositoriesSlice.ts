@@ -9,12 +9,18 @@ interface IRepositoriesState {
   isLoading: boolean;
   filterParams: IRepositoriesFilterParams;
   repositories: IRepository[];
+  totalCount: number;
 }
 
 const initialState: IRepositoriesState = {
   isLoading: false,
-  filterParams: {},
+  filterParams: {
+    q: "language:TypeScript",
+    sort: "stars",
+    order: "desc",
+  },
   repositories: [],
+  totalCount: 0,
 };
 
 export const repositoriesSlice = createSlice({
@@ -24,6 +30,9 @@ export const repositoriesSlice = createSlice({
     changeFilterParams(state, { payload }) {
       state.filterParams = payload;
     },
+    setTotalCount(state, { payload }) {
+      state.totalCount = payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -31,9 +40,7 @@ export const repositoriesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchRepositories.fulfilled, (state, { payload }) => {
-        console.log('payload', payload)
         state.isLoading = false;
-        state.filterParams = payload;
         state.repositories = payload.items;
       })
       .addCase(fetchRepositories.rejected, (state) => {
@@ -44,6 +51,9 @@ export const repositoriesSlice = createSlice({
 
 export const repositoriesSelectors = {
   getRepositories: (state: State) => state[NameSpace.Repositories].repositories,
+  getIsLoading: (state: State) => state[NameSpace.Repositories].isLoading,
+  getFilterParams: (state: State) => state[NameSpace.Repositories].filterParams,
+  getTotalCount: (state: State) => state[NameSpace.Repositories].totalCount,
 };
 
 export const repositoriesActions = {...repositoriesSlice.actions, fetchRepositories};
