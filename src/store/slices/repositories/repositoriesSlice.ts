@@ -18,6 +18,8 @@ const initialState: IRepositoriesState = {
     q: "language:TypeScript",
     sort: "stars",
     order: "desc",
+    per_page: 30,
+    page: 1,
   },
   repositories: [],
   totalCount: 0,

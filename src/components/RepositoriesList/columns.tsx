@@ -11,6 +11,7 @@ export const repositoriesColumns = () => [
     width: 44,
     sortable: false,
     filterable: false,
+    resizable: false,
     renderHeader: () => null,
     renderCell: (params: GridRenderCellParams) => {
       const url = params.row.owner.avatar_url;
@@ -27,12 +28,14 @@ export const repositoriesColumns = () => [
     field: "full_name",
     headerName: "Name",
     width: 250,
+    minWidth: 200,
     sortable: false,
   },
   {
     field: "description",
     headerName: "Description",
     flex: 1,
+    minWidth: 200,
     sortable: false,
   },
   {
@@ -59,19 +62,19 @@ export const repositoriesColumns = () => [
     headerName: "Forks",
     width: 120,
     renderCell: (params: GridRenderCellParams) => {
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: pixelsToRem(10),
-            }}
-          >
-            <ForksIcon sx={{ flexShrink: 0 }} />
-            <span>{params.value.toLocaleString()}</span>
-          </Box>
-        );
-      },
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: pixelsToRem(10),
+          }}
+        >
+          <ForksIcon sx={{ flexShrink: 0 }} />
+          <span>{params.value.toLocaleString()}</span>
+        </Box>
+      );
+    },
   },
   {
     field: "homepage",
